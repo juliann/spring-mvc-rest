@@ -21,7 +21,7 @@ jobs:
       # Then run your tests!
       - run:
           name: Test
-          command: mvn integration-test jacocoTestReport
+          command: mvn integration-test
 
 workflows:
   # Below is the definition of your workflow.
@@ -32,6 +32,4 @@ workflows:
     jobs:
       - build-and-test
       
-      - run:
-          name: Send to CodeCov
-          command: bash <(curl -s https://codecov.io/bash)
+
