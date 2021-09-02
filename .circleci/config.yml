@@ -22,6 +22,8 @@ jobs:
       - run:
           name: Test
           command: mvn integration-test
+      - store_artifacts:
+          path: target
 
 workflows:
   # Below is the definition of your workflow.
