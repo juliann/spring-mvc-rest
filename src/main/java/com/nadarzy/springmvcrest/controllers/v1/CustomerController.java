@@ -30,4 +30,6 @@ public class CustomerController {
   public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
     return new ResponseEntity<CustomerDTO>(customerService.getCustomerById(id), HttpStatus.OK);
   }
+
+  //  @PostMapping
 }

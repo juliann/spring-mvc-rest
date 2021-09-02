@@ -2,6 +2,7 @@ package com.nadarzy.springmvcrest.services;
 
 import com.nadarzy.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.nadarzy.springmvcrest.api.v1.model.CustomerDTO;
+import com.nadarzy.springmvcrest.model.Customer;
 import com.nadarzy.springmvcrest.repositiories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,24 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Override
   public CustomerDTO getCustomerById(Long id) {
-    CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customerRepository.getById(id));
-    customerDTO.setCustomerUrl("/api/v1/customer/" + customerDTO.getId());
-    return customerDTO;
+    return customerRepository
+        .findById(id)
+        .map(customerMapper::customerToCustomerDTO)
+        .map(
+            customerDTO -> {
+              customerDTO.setCustomerUrl("/api/v1/customer/" + customerDTO.getId());
+              return customerDTO;
+            })
+        .orElseThrow(RuntimeException::new);
+  }
+
+  @Override
+  public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+    Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+    Customer savedCustomer = customerRepository.save(customer);
+    CustomerDTO returnDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+    returnDTO.setCustomerUrl("/api/v1/customer/" + returnDTO.getId());
+
+    return returnDTO;
   }
 }
