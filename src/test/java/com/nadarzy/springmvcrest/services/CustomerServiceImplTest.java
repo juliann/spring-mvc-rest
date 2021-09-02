@@ -1,6 +1,5 @@
 package com.nadarzy.springmvcrest.services;
 
-import com.nadarzy.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.nadarzy.springmvcrest.api.v1.model.CustomerDTO;
 import com.nadarzy.springmvcrest.model.Customer;
 import com.nadarzy.springmvcrest.repositiories.CustomerRepository;
@@ -18,8 +17,6 @@ import static org.mockito.Mockito.*;
 class CustomerServiceImplTest {
 
   @Mock CustomerRepository customerRepository;
-
-  CustomerMapper customerMapper = CustomerMapper.INSTANCE;
 
   CustomerService customerService;
 
@@ -78,7 +75,7 @@ class CustomerServiceImplTest {
     Customer savedCustomer = new Customer();
     savedCustomer.setFirstName(customerDTO.getFirstName());
     savedCustomer.setLastName(customerDTO.getLastName());
-    savedCustomer.setId(1l);
+    savedCustomer.setId(1L);
 
     when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 

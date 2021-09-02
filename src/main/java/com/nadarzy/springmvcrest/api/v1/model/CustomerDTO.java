@@ -13,4 +13,21 @@ public class CustomerDTO {
   private String firstName;
   private String lastName;
   private String customerUrl;
+
+  @Override
+  public String toString() {
+    return "CustomerDTO{"
+        + "id="
+        + id
+        + ", firstName='"
+        + firstName
+        + '\''
+        + ", lastName='"
+        + lastName
+        + '\''
+        + ", customerUrl='"
+        + customerUrl
+        + '\''
+        + '}';
+  }
 }
