@@ -9,10 +9,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class CategoryListDTO {
-  private List<CategoryDTO> categories;
-
-
+@NoArgsConstructor
+public class CustomerListDTO {
+  private List<CustomerDTO> customers;
 }
