@@ -5,6 +5,7 @@ import com.nadarzy.springmvcrest.bootstrap.Bootstrap;
 import com.nadarzy.springmvcrest.model.Customer;
 import com.nadarzy.springmvcrest.repositiories.CategoryRepository;
 import com.nadarzy.springmvcrest.repositiories.CustomerRepository;
+import com.nadarzy.springmvcrest.repositiories.VendorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class CustomerServiceImplIT {
   @Autowired CustomerRepository customerRepository;
 
   @Autowired CategoryRepository categoryRepository;
+  @Autowired VendorRepository vendorRepository;
 
   CustomerService customerService;
 
@@ -33,7 +35,7 @@ public class CustomerServiceImplIT {
     System.out.println(customerRepository.findAll().size());
 
     // setup data for testing
-    Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+    Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
     bootstrap.run(); // load data
 
     customerService = new CustomerServiceImpl(customerRepository);
