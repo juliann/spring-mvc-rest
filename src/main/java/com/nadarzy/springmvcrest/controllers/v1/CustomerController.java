@@ -3,11 +3,16 @@ package com.nadarzy.springmvcrest.controllers.v1;
 import com.nadarzy.springmvcrest.api.v1.model.CustomerDTO;
 import com.nadarzy.springmvcrest.api.v1.model.CustomerListDTO;
 import com.nadarzy.springmvcrest.services.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Api(
+    value = "",
+    tags = {"This is my Customer Controller"})
 @Controller
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -19,6 +24,7 @@ public class CustomerController {
     this.customerService = customerService;
   }
 
+  @ApiOperation(value = "This will get a list of all Customers", notes = "These are notes")
   @GetMapping({"", "/"})
   public ResponseEntity<CustomerListDTO> getAllCustomers() {
     return new ResponseEntity<>(
