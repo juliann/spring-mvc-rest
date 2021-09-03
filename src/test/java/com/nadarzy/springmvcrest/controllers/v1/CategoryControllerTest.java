@@ -1,6 +1,7 @@
 package com.nadarzy.springmvcrest.controllers.v1;
 
 import com.nadarzy.springmvcrest.api.v1.model.CategoryDTO;
+import com.nadarzy.springmvcrest.exceptions.ResourceNotFoundException;
 import com.nadarzy.springmvcrest.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,10 @@ public class CategoryControllerTest {
   public void setUp() throws Exception {
     MockitoAnnotations.openMocks(this);
 
-    mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+    mockMvc =
+        MockMvcBuilders.standaloneSetup(categoryController)
+            .setControllerAdvice(new RestResponseEntityExceptionHandler())
+            .build();
   }
 
   @Test
@@ -71,5 +75,14 @@ public class CategoryControllerTest {
         .perform(get("/api/v1/categories/Jim").contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.name", equalTo(NAME)));
+  }
+
+  @Test
+  public void testGetByNameNotFound() throws Exception {
+    when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+
+    mockMvc
+        .perform(get(CategoryController.BASE_URL + "/foo").contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
   }
 }

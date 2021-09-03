@@ -3,6 +3,7 @@ package com.nadarzy.springmvcrest.services;
 import com.nadarzy.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.nadarzy.springmvcrest.api.v1.model.CustomerDTO;
 import com.nadarzy.springmvcrest.controllers.v1.CustomerController;
+import com.nadarzy.springmvcrest.exceptions.ResourceNotFoundException;
 import com.nadarzy.springmvcrest.model.Customer;
 import com.nadarzy.springmvcrest.repositiories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
               customerDTO.setCustomerUrl(CustomerController.BASE_URL + "/" + customerDTO.getId());
               return customerDTO;
             })
-        .orElseThrow(RuntimeException::new);
+        .orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override
