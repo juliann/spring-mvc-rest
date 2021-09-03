@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.nadarzy.springmvcrest.controllers.v1.CustomerController.BASE_URL;
 import static org.mockito.Mockito.*;
 
 class CustomerServiceImplTest {
@@ -84,7 +85,7 @@ class CustomerServiceImplTest {
 
     // then
     Assertions.assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
-    Assertions.assertEquals("/api/v1/customer/1", savedDto.getCustomerUrl());
+    Assertions.assertEquals(BASE_URL + "/1", savedDto.getCustomerUrl());
   }
 
   //  @Test

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class AbstractRestControllerTest {
 
-  public static String asJsonString(final Object obj) {
+  public static String asJsonString(Object obj) {
     try {
       String s = new ObjectMapper().writeValueAsString(obj);
       System.out.println(s);

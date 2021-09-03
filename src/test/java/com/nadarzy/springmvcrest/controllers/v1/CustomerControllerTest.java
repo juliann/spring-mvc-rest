@@ -1,5 +1,7 @@
 package com.nadarzy.springmvcrest.controllers.v1;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nadarzy.springmvcrest.api.v1.model.CustomerDTO;
 import com.nadarzy.springmvcrest.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +18,10 @@ import java.util.Arrays;
 import static com.nadarzy.springmvcrest.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,8 +34,8 @@ class CustomerControllerTest {
   MockMvc mockMvc;
 
   @BeforeEach
-  public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
+  public void setUp() {
+    MockitoAnnotations.openMocks(this);
 
     mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
   }
@@ -89,10 +91,20 @@ class CustomerControllerTest {
     returnDTO.setFirstName(customer.getFirstName());
     returnDTO.setLastName(customer.getLastName());
     returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
-    System.out.println("###################" + returnDTO);
+
     when(customerService.createNewCustomer(customer)).thenReturn(returnDTO);
 
     // when/then
+    String json = null;
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      json = mapper.writeValueAsString(returnDTO);
+      System.out.println("ResultingJSONstring = " + json);
+      // System.out.println(json);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+
     mockMvc
         .perform(
             post(CustomerController.BASE_URL)
@@ -100,35 +112,35 @@ class CustomerControllerTest {
                 .content(asJsonString(customer)))
         .andExpect(status().isCreated());
     //        .andExpect(jsonPath("$.firstName", equalTo("Fred")))
-    //        .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+    //        .andExpect(jsonPath("$.lastName", equalTo("Flintstone")));
   }
 
-  //  @Test
-  //  public void testUpdateCustomer() throws Exception {
-  //    // given
-  //    CustomerDTO customer = new CustomerDTO();
-  //    customer.setFirstName("Fred");
-  //    customer.setLastName("Flintstone");
-  //
-  //    CustomerDTO returnDTO = new CustomerDTO();
-  //    returnDTO.setFirstName(customer.getFirstName());
-  //    returnDTO.setLastName(customer.getLastName());
-  //    returnDTO.setCustomerUrl("CustomerController.BASE_URL");
-  //
-  //    when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class)))
-  //        .thenReturn(returnDTO);
-  //
-  //    // when/then
-  //    mockMvc
-  //        .perform(
-  //            put("CustomerController.BASE_URL")
-  //                .contentType(MediaType.APPLICATION_JSON)
-  //                .content(asJsonString(customer)))
-  //        .andExpect(status().isOk())
-  //        .andExpect(jsonPath("$.firstname", equalTo("Fred")))
-  //        .andExpect(jsonPath("$.lastname", equalTo("Flintstone")))
-  //        .andExpect(jsonPath("$.customer_url", equalTo("CustomerController.BASE_URL")));
-  //  }
+  @Test
+  public void testUpdateCustomer() throws Exception {
+    // given
+    CustomerDTO customer = new CustomerDTO();
+    customer.setFirstName("Fred");
+    customer.setLastName("Flintstone");
+
+    CustomerDTO returnDTO = new CustomerDTO();
+    returnDTO.setFirstName(customer.getFirstName());
+    returnDTO.setLastName(customer.getLastName());
+    returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
+
+    when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class)))
+        .thenReturn(returnDTO);
+
+    // when/then
+    mockMvc
+        .perform(
+            put(CustomerController.BASE_URL + "/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(customer)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.firstName", equalTo("Fred")))
+        .andExpect(jsonPath("$.lastName", equalTo("Flintstone")))
+        .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+  }
   //
   //  @Test
   //  public void testPatchCustomer() throws Exception {
