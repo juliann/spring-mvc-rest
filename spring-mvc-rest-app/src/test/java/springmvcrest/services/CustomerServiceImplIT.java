@@ -1,11 +1,11 @@
 package springmvcrest.services;
 
+import com.nadarzy.model.CustomerDTO;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import springmvcrest.api.v1.model.CustomerDTO;
 import springmvcrest.bootstrap.Bootstrap;
 import springmvcrest.model.Customer;
 import springmvcrest.repositiories.CategoryRepository;

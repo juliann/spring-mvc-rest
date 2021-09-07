@@ -1,6 +1,6 @@
 package springmvcrest.services;
 
-import springmvcrest.api.v1.model.CustomerDTO;
+import com.nadarzy.model.CustomerDTO;
 
 import java.util.List;
 

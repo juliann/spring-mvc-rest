@@ -1,13 +1,13 @@
 package springmvcrest.controllers.v1;
 
+import com.nadarzy.model.CustomerDTO;
+import com.nadarzy.model.CustomerListDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import springmvcrest.api.v1.model.CustomerDTO;
-import springmvcrest.api.v1.model.CustomerListDTO;
 import springmvcrest.services.CustomerService;
 
 @Api(
@@ -27,8 +27,9 @@ public class CustomerController {
   @ApiOperation(value = "This will get a list of all Customers", notes = "These are notes")
   @GetMapping({"", "/"})
   public ResponseEntity<CustomerListDTO> getAllCustomers() {
-    return new ResponseEntity<>(
-        new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK);
+    CustomerListDTO customerListDTO = new CustomerListDTO();
+    customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+    return new ResponseEntity<>((customerListDTO), HttpStatus.OK);
   }
 
   @GetMapping("{id}")

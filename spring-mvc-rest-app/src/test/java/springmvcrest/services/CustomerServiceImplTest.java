@@ -1,10 +1,10 @@
 package springmvcrest.services;
 
+import com.nadarzy.model.CustomerDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import springmvcrest.api.v1.model.CustomerDTO;
 import springmvcrest.model.Customer;
 import springmvcrest.repositiories.CustomerRepository;
 

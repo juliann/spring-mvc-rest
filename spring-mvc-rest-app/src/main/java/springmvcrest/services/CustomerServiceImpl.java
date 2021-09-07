@@ -1,8 +1,8 @@
 package springmvcrest.services;
 
+import com.nadarzy.model.CustomerDTO;
 import org.springframework.stereotype.Service;
 import springmvcrest.api.v1.mapper.CustomerMapper;
-import springmvcrest.api.v1.model.CustomerDTO;
 import springmvcrest.controllers.v1.CustomerController;
 import springmvcrest.exceptions.ResourceNotFoundException;
 import springmvcrest.model.Customer;

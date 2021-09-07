@@ -2,6 +2,7 @@ package springmvcrest.controllers.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nadarzy.model.CustomerDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import springmvcrest.api.v1.model.CustomerDTO;
 import springmvcrest.exceptions.ResourceNotFoundException;
 import springmvcrest.services.CustomerService;
 
@@ -151,7 +151,7 @@ class CustomerControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.firstName", equalTo("Fred")))
         .andExpect(jsonPath("$.lastName", equalTo("Flintstone")))
-        .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+        .andExpect(jsonPath("$.customerUrl", equalTo(CustomerController.BASE_URL + "/1")));
   }
 
   @Test
@@ -177,7 +177,7 @@ class CustomerControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.firstName", equalTo("Fred")))
         .andExpect(jsonPath("$.lastName", equalTo("Flintstone")))
-        .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
+        .andExpect(jsonPath("$.customerUrl", equalTo(CustomerController.BASE_URL + "/1")));
   }
 
   @Test

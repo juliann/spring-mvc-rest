@@ -1,7 +1,7 @@
 package springmvcrest.api.v1.mapper;
 
+import com.nadarzy.model.CustomerDTO;
 import org.junit.jupiter.api.Test;
-import springmvcrest.api.v1.model.CustomerDTO;
 import springmvcrest.model.Customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
